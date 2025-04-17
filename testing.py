@@ -1,9 +1,8 @@
 import cv2
 import gym
 import torch
-
 import action_manager
-from train import ChopTreeAgent
+from chopTreeAgent import ChopTreeAgent
 
 
 def preprocess_obs(obs):
@@ -28,6 +27,7 @@ def build_action_dict(actions, env):
     return ac
 
 def print_action(action_dict):
+    """Print action taken in real-time"""
     display = []
     for key, val in action_dict.items():
         if key == 'action$camera':
@@ -56,7 +56,7 @@ capacity = 2000000
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-action_manager = action_manager.ActionManager(device)
+action_manager = action_manager.ActionController(device)
 num_outputs = len(action_manager.action_to_id) + 1
 
 agent = ChopTreeAgent(num_actions=num_outputs, image_channels=3, batch_size=BATCH_SIZE, hidden_size=hidden_size, lr=lr, gamma=gamma, device=device, action_manager=action_manager, buffer_capacity=buffer_capacity)

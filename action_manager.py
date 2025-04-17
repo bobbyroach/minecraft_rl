@@ -2,7 +2,7 @@ import copy
 import numpy as np
 
 
-class ActionManager:
+class ActionController:
     """Action wrapper with discrete camera outputs"""
 
     def __init__(self, device):

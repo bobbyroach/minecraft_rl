@@ -12,7 +12,7 @@ class MineRLDataset(Dataset):
         self.action_manager = action_manager
         self.data = np.array([None] * capacity)
 
-    def put_data_into_dataset(self, data, camera_stacking_amount):
+    def insert_data(self, data, camera_stacking_amount):
         """Put video and action pairs into dataset and exaggerate camera movements"""
         for episode in data:
             sample_queue = deque(maxlen=camera_stacking_amount)
@@ -53,7 +53,7 @@ class MineRLDataset(Dataset):
         torch_img = torch.from_numpy(frame).permute(2, 0, 1)
         self.data.append((torch_img, action_id, reward, done))
 
-    def sample_line(self, batch_size):
+    def sample_batch(self, batch_size):
         """Take a batch of random samples"""
         ids = np.random.randint(0, len(self.data), size=batch_size)
         states, actions, rewards, dones = [], [], [], []
